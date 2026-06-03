@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AutoFlow AI — AI Automation Agency</title>
+<meta name="description" content="We automate your lead generation, customer service, and appointment booking with cutting-edge AI — so your business grows while you sleep."/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060B14;--dark:#080E1A;--card:#0C1422;--card2:#0F1928;--border:#1A2540;
+  --purple:#7C3AED;--purple-light:#9D62F5;--cyan:#06B6D4;--cyan-light:#22D3EE;
+  --green:#10B981;--white:#FFFFFF;--text:#C8D8F0;--gray:#6A7FA8;
+  --radius:14px;--glow-p:rgba(124,58,237,0.25);--glow-c:rgba(6,182,212,0.15);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+.section{padding:96px 0}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.30);color:var(--purple-light);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:100px}
+.tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple-light);animation:pd 2s infinite;flex-shrink:0}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:.4}}
+.section-header{text-align:center;margin-bottom:64px}
+.section-header .tag{margin-bottom:16px}
+.section-header h2{font-size:clamp(28px,4vw,46px);font-weight:900;color:var(--white);line-height:1.15;letter-spacing:-.03em;margin-bottom:14px}
+.section-header p{font-size:16px;color:var(--gray);max-width:540px;margin:0 auto;line-height:1.75}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;padding:14px 28px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;transition:all .25s}
+.btn-purple{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:var(--white);box-shadow:0 8px 32px rgba(124,58,237,0.35)}
+.btn-purple:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(124,58,237,0.50)}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan-light));color:#060B14;font-weight:800}
+.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(6,182,212,0.40)}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:rgba(124,58,237,0.5);background:rgba(124,58,237,0.06)}
+.btn-lg{font-size:16px;padding:17px 36px;border-radius:12px}
+.arr{width:18px;height:18px;transition:transform .2s}
+.btn:hover .arr{transform:translateX(3px)}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 24px;transition:all .3s}
+nav.scrolled{background:rgba(6,11,20,0.96);backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border)}
+.nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-size:19px;font-weight:900;color:var(--white);text-decoration:none;letter-spacing:-.04em;display:flex;align-items:center;gap:9px}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:18px;height:18px;color:var(--white)}
+.logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:rgba(255,255,255,0.55);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.ham span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px}
+.mob{display:none;position:fixed;top:68px;left:0;right:0;z-index:99;background:rgba(6,11,20,0.98);backdrop-filter:blur(16px);padding:20px 24px;flex-direction:column;gap:4px;border-top:1px solid var(--border)}
+.mob.open{display:flex}
+.mob a{color:rgba(255,255,255,0.75);font-size:16px;font-weight:500;text-decoration:none;padding:12px 0;border-bottom:1px solid var(--border)}
+.mob a:hover{color:var(--purple-light)}
+.mob .btn{margin-top:12px;justify-content:center}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--bg)}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(124,58,237,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.04) 1px,transparent 1px);background-size:48px 48px}
+.hglow{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
+.hg1{width:600px;height:600px;background:var(--glow-p);top:-150px;right:-100px}
+.hg2{width:400px;height:400px;background:var(--glow-c);bottom:-50px;left:-80px}
+.hero-inner{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:140px 24px 100px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,58,237,0.10);border:1px solid rgba(124,58,237,0.25);border-radius:100px;padding:6px 16px;margin-bottom:22px}
+.hb-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pd 1.5s infinite}
+.hb-text{font-size:12px;font-weight:700;color:rgba(255,255,255,0.70);letter-spacing:.06em;text-transform:uppercase}
+h1.ht{font-size:clamp(38px,5.5vw,64px);font-weight:900;color:var(--white);line-height:1.08;letter-spacing:-.04em;margin-bottom:20px}
+h1.ht em{font-style:normal;background:linear-gradient(135deg,var(--purple-light),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs{font-size:17px;color:var(--gray);line-height:1.75;margin-bottom:34px;max-width:500px}
+.hbtns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.htrust{display:flex;align-items:center;gap:14px;padding-top:24px;border-top:1px solid var(--border)}
+.hav{display:flex}
+.hav-pl{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--white);flex-shrink:0}
+.hav-pl:first-child{margin-left:0}
+.htrust-text{font-size:13px;color:var(--gray)}
+.htrust-text strong{color:var(--white)}
+
+/* Hero visual panel */
+.hero-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5)}
+.panel-header{background:rgba(124,58,237,0.08);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:8px}
+.panel-dot{width:10px;height:10px;border-radius:50%}
+.panel-title{font-size:12px;font-weight:600;color:var(--gray);margin-left:6px}
+.panel-body{padding:20px}
+.chat-bubble{padding:12px 16px;border-radius:12px;font-size:13px;margin-bottom:10px;max-width:85%;line-height:1.6}
+.chat-ai{background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.2);color:var(--text);margin-right:auto;border-bottom-left-radius:4px}
+.chat-user{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.2);color:var(--text);margin-left:auto;border-bottom-right-radius:4px}
+.chat-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.la{color:var(--purple-light)}
+.lu{color:var(--cyan)}
+.panel-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.ps-item{text-align:center}
+.ps-num{font-size:20px;font-weight:900;color:var(--white);letter-spacing:-.04em}
+.ps-label{font-size:10px;color:var(--gray);margin-top:2px}
+.ps-up{font-size:10px;font-weight:700;color:var(--green);margin-top:3px}
+
+/* SERVICES */
+#services{background:var(--dark)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;position:relative;overflow:hidden;transition:all .3s;cursor:default}
+.svc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.svc:hover{border-color:rgba(124,58,237,0.30);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.svc:hover::after{transform:scaleX(1)}
+.svc-icon2{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(124,58,237,0.18),rgba(6,182,212,0.10));border:1px solid rgba(124,58,237,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.svc-icon2 svg{width:26px;height:26px}
+.svc h3{font-size:18px;font-weight:800;color:var(--white);margin-bottom:10px;letter-spacing:-.02em}
+.svc p{font-size:14px;color:var(--gray);line-height:1.7}
+.svc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chip{font-size:11px;font-weight:600;background:rgba(124,58,237,0.10);border:1px solid rgba(124,58,237,0.20);color:rgba(200,216,240,0.70);padding:3px 10px;border-radius:100px}
+
+/* HOW IT WORKS */
+#hiw{background:var(--bg)}
+.hiw-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hiw-content .tag{margin-bottom:18px}
+.hiw-content h2{font-size:clamp(28px,3.5vw,42px);font-weight:900;color:var(--white);letter-spacing:-.03em;line-height:1.2;margin-bottom:16px}
+.hiw-content>p{font-size:15px;color:var(--gray);line-height:1.75;margin-bottom:32px}
+.hiw-steps{display:flex;flex-direction:column;gap:20px}
+.hiw-step{display:flex;align-items:flex-start;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .2s}
+.hiw-step:hover{border-color:rgba(124,58,237,0.30)}
+.step-icon{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,rgba(124,58,237,0.20),rgba(6,182,212,0.10));border:1px solid rgba(124,58,237,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-icon svg{width:22px;height:22px;color:var(--purple-light)}
+.hiw-step h4{font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px}
+.hiw-step p{font-size:13px;color:var(--gray);line-height:1.65;margin:0}
+/* Visual panel right */
+.hiw-visual{display:flex;flex-direction:column;gap:16px}
+.flow-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;position:relative;overflow:hidden}
+.flow-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--purple),var(--cyan))}
+.flow-card h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px}
+.flow-card p{font-size:13px;color:var(--gray);margin:0}
+.flow-badge{position:absolute;top:16px;right:16px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);color:#34D399;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+
+/* ROI */
+#roi{background:var(--dark)}
+.roi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.roi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;text-align:center;transition:all .3s}
+.roi-card:hover{border-color:rgba(124,58,237,0.30);transform:translateY(-4px)}
+.roi-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(6,182,212,0.08));border:1px solid rgba(124,58,237,0.20);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.roi-icon svg{width:28px;height:28px;color:var(--purple-light)}
+.roi-num{font-size:38px;font-weight:900;color:var(--white);letter-spacing:-.04em;margin-bottom:6px}
+.roi-label{font-size:13px;color:var(--gray)}
+
+/* PRICING */
+#pricing{background:var(--bg)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px;transition:all .3s;position:relative}
+.price-card.featured{border-color:rgba(124,58,237,0.50);background:rgba(124,58,237,0.06);box-shadow:0 0 0 1px rgba(124,58,237,0.20)}
+.feat-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--purple),var(--purple-light));color:var(--white);font-size:11px;font-weight:800;padding:4px 16px;border-radius:100px;letter-spacing:.05em;white-space:nowrap}
+.plan-name{font-size:13px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.plan-price{font-size:48px;font-weight:900;color:var(--white);letter-spacing:-.04em;line-height:1}
+.plan-price sup{font-size:22px;vertical-align:top;margin-top:10px;color:var(--purple-light)}
+.plan-price sub{font-size:15px;font-weight:500;color:var(--gray);vertical-align:bottom;margin-bottom:4px}
+.plan-desc{font-size:14px;color:var(--gray);margin:12px 0 24px;line-height:1.65}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.plan-features li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text)}
+.plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.plan-features li.no{color:var(--gray)}
+.plan-features li.no::before{content:'✕';color:var(--border)}
+
+/* TESTIMONIALS */
+#testimonials{background:var(--dark)}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .3s}
+.tc:hover{border-color:rgba(124,58,237,0.25);transform:translateY(-3px)}
+.tc-stars{color:var(--purple-light);font-size:14px;letter-spacing:2px;margin-bottom:12px}
+.tc-q{font-size:14px;color:rgba(200,216,240,0.70);line-height:1.75;margin-bottom:18px;font-style:italic}
+.tc-auth{display:flex;align-items:center;gap:10px}
+.tc-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white);flex-shrink:0}
+.tc-name{font-size:14px;font-weight:700;color:var(--white)}
+.tc-role{font-size:12px;color:var(--gray)}
+.tc-res{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.tc-res-num{font-size:18px;font-weight:900;color:var(--green)}
+.tc-res-l{font-size:12px;color:var(--gray)}
+
+/* FAQ */
+#faq{background:var(--bg)}
+.faq-wrap{max-width:740px;margin:0 auto}
+.fi{border-bottom:1px solid var(--border)}
+.fq{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 0;text-align:left}
+.fq h4{font-size:15px;font-weight:600;color:var(--white);flex:1;padding-right:16px}
+.fi-icon{width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text);font-size:18px;flex-shrink:0;transition:all .3s}
+.fi.open .fi-icon{background:var(--purple);border-color:var(--purple);transform:rotate(45deg)}
+.fa{display:none;font-size:14px;color:var(--gray);line-height:1.75;padding-bottom:20px;padding-right:40px}
+.fi.open .fa{display:block}
+
+/* CTA FINAL */
+#cta{background:var(--dark);text-align:center;position:relative;overflow:hidden}
+.cta-wrap{position:relative;z-index:2}
+.cta-wrap .tag{margin-bottom:20px}
+.cta-wrap h2{font-size:clamp(30px,5vw,54px);font-weight:900;color:var(--white);letter-spacing:-.04em;line-height:1.1;margin-bottom:16px}
+.cta-wrap h2 em{font-style:normal;background:linear-gradient(135deg,var(--purple-light),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-wrap p{font-size:17px;color:var(--gray);max-width:520px;margin:0 auto 36px;line-height:1.75}
+.cta-btns2{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* CONTACT */
+#contact{background:var(--bg)}
+.con-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start}
+.con-info .tag{margin-bottom:16px}
+.con-info h2{font-size:clamp(24px,3vw,36px);font-weight:900;color:var(--white);letter-spacing:-.03em;margin-bottom:14px}
+.con-info p{font-size:15px;color:var(--gray);line-height:1.75;margin-bottom:28px}
+.con-det{display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(200,216,240,0.65);margin-bottom:14px}
+.con-icon{width:38px;height:38px;border-radius:9px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.con-icon svg{width:18px;height:18px;color:var(--purple-light)}
+.con-form{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px}
+.con-form h3{font-size:18px;font-weight:800;color:var(--white);margin-bottom:6px}
+.con-form>p{font-size:13px;color:var(--gray);margin-bottom:24px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:700;color:rgba(200,216,240,0.6);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.fg input,.fg select,.fg textarea{width:100%;padding:12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--purple)}
+.fg textarea{resize:vertical;min-height:90px}
+.fg select option{background:var(--dark)}
+.fgr{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* FOOTER */
+footer{background:var(--dark);padding:56px 0 24px;border-top:1px solid var(--border)}
+.ft{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.fb-logo{font-size:19px;font-weight:900;color:var(--white);letter-spacing:-.04em}
+.fb-logo span{color:var(--cyan)}
+.fb p{font-size:14px;color:var(--gray);line-height:1.75;margin-top:12px;max-width:240px}
+.fc h4{font-size:11px;font-weight:800;color:rgba(255,255,255,0.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.fc ul li a{font-size:14px;color:var(--gray);text-decoration:none;transition:color .2s}
+.fc ul li a:hover{color:var(--purple-light)}
+.fb-bot{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.fb-bot p{font-size:13px;color:rgba(255,255,255,0.25)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.svc-grid,.tg,.pricing-grid{grid-template-columns:repeat(2,1fr)}.roi-grid{grid-template-columns:repeat(2,1fr)}.ft{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .nav-links,.nav-cta2{display:none}.ham{display:flex}
+  .hero-inner{grid-template-columns:1fr;padding:120px 24px 64px}.hero-panel{display:none}
+  .hiw-grid,.con-grid{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr 1fr}.fb-bot{flex-direction:column;text-align:center}
+}
+@media(max-width:480px){.svc-grid,.tg,.pricing-grid,.roi-grid{grid-template-columns:1fr}.fgr{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav id="nb">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+      Auto<span>Flow</span> AI
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#hiw">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#testimonials">Results</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div style="display:flex;gap:10px" class="nav-cta2">
+      <a href="#contact" class="btn btn-purple">Book a Demo <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob" id="mob">
+  <a href="#services" onclick="cm()">Services</a>
+  <a href="#hiw" onclick="cm()">How It Works</a>
+  <a href="#pricing" onclick="cm()">Pricing</a>
+  <a href="#testimonials" onclick="cm()">Results</a>
+  <a href="#contact" onclick="cm()" class="btn btn-purple btn-lg">Book a Demo</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hgrid"></div>
+  <div class="hglow hg1"></div>
+  <div class="hglow hg2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><div class="hb-dot"></div><span class="hb-text">AI Automation · Now Live</span></div>
+      <h1 class="ht">Your Business Runs on <em>Autopilot</em>. Finally.</h1>
+      <p class="hs">We build AI-powered systems that capture leads, answer customers, book appointments, and follow up — 24/7, without a single employee.</p>
+      <div class="hbtns">
+        <a href="#contact" class="btn btn-purple btn-lg">Book Free AI Demo <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="#pricing" class="btn btn-outline btn-lg">See Pricing</a>
+      </div>
+      <div class="htrust">
+        <div class="hav">
+          <div class="hav-pl" style="background:linear-gradient(135deg,#7C3AED,#9D62F5)">MK</div>
+          <div class="hav-pl" style="background:linear-gradient(135deg,#06B6D4,#22D3EE)">JR</div>
+          <div class="hav-pl" style="background:linear-gradient(135deg,#10B981,#059669)">AS</div>
+          <div class="hav-pl" style="background:linear-gradient(135deg,#F59E0B,#D97706)">TC</div>
+        </div>
+        <div class="htrust-text"><strong>300+ businesses</strong> already automated with AutoFlow AI</div>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-header">
+        <div class="panel-dot" style="background:#EF4444"></div>
+        <div class="panel-dot" style="background:#F59E0B"></div>
+        <div class="panel-dot" style="background:#10B981"></div>
+        <span class="panel-title">AutoFlow AI · Live Chat Agent</span>
+      </div>
+      <div class="panel-body">
+        <div><p class="chat-label la">AI AGENT</p>
+          <div class="chat-bubble chat-ai">Hi! I'm AutoFlow — your 24/7 business assistant. I can help schedule appointments, answer questions, and qualify leads. How can I help you today?</div>
+        </div>
+        <div style="text-align:right"><p class="chat-label lu" style="text-align:right">VISITOR</p>
+          <div class="chat-bubble chat-user">I'm interested in your services. What packages do you offer?</div>
+        </div>
+        <div><p class="chat-label la">AI AGENT</p>
+          <div class="chat-bubble chat-ai">Great! We have 3 plans starting at $497/mo. Based on your needs I'd recommend our Growth plan. Want me to book you a free 30-min strategy call? I have openings tomorrow at 10am or 2pm. ✅</div>
+        </div>
+        <div class="panel-stats">
+          <div class="ps-item"><div class="ps-num">2.4s</div><div class="ps-label">Avg Response</div><div class="ps-up">● Live</div></div>
+          <div class="ps-item"><div class="ps-num">94%</div><div class="ps-label">Handled by AI</div><div class="ps-up">↑ +12%</div></div>
+          <div class="ps-item"><div class="ps-num">38</div><div class="ps-label">Leads today</div><div class="ps-up">↑ +23%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="tag">What We Automate</span>
+      <h2>AI Systems That Replace Repetitive Work</h2>
+      <p>From the moment someone finds your business to long after they've paid — every touchpoint automated, every lead captured.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc fade-up">
+        <div class="svc-icon2"><svg viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7C3AED"/><stop offset="100%" stop-color="#06B6D4"/></linearGradient></defs><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>AI Chatbot & Live Agent</h3>
+        <p>A trained AI assistant that lives on your website — answering questions, qualifying leads, and booking calls around the clock with zero staff needed.</p>
+        <div class="svc-chips"><span class="chip">24/7 Availability</span><span class="chip">GPT-4 Powered</span><span class="chip">Custom Trained</span></div>
+      </div>
+      <div class="svc fade-up" style="transition-delay:.08s">
+        <div class="svc-icon2"><svg viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
+        <h3>Lead Generation Automation</h3>
+        <p>Multi-channel lead capture funnels, automated outreach sequences, and CRM integrations that fill your pipeline without any manual prospecting.</p>
+        <div class="svc-chips"><span class="chip">Email Sequences</span><span class="chip">LinkedIn Outreach</span><span class="chip">CRM Sync</span></div>
+      </div>
+      <div class="svc fade-up" style="transition-delay:.16s">
+        <div class="svc-icon2"><svg viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h3>Appointment Booking Automation</h3>
+        <p>AI-driven scheduling that qualifies prospects, books them into your calendar, sends reminders, and reduces no-shows by up to 70%.</p>
+        <div class="svc-chips"><span class="chip">Calendar Sync</span><span class="chip">SMS Reminders</span><span class="chip">Rescheduling</span></div>
+      </div>
+      <div class="svc fade-up" style="transition-delay:.24s">
+        <div class="svc-icon2"><svg viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <h3>Email & SMS Follow-Up</h3>
+        <p>Behavioural triggers and automated nurture sequences that follow up with every lead at exactly the right time — increasing show-up and close rates significantly.</p>
+        <div class="svc-chips"><span class="chip">Behaviour Triggers</span><span class="chip">A/B Testing</span><span class="chip">Smart Timing</span></div>
+      </div>
+      <div class="svc fade-up" style="transition-delay:.32s">
+        <div class="svc-icon2"><svg viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Customer Service Automation</h3>
+        <p>AI agents trained on your business data that handle FAQs, support tickets, and customer requests — escalating to a human only when truly needed.</p>
+        <div class="svc-chips"><span class="chip">Ticket Routing</span><span class="chip">Knowledge Base</span><span class="chip">Escalation Logic</span></div>
+      </div>
+      <div class="svc fade-up" style="transition-delay:.40s">
+        <div class="svc-icon2"><svg viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Analytics & AI Reporting</h3>
+        <p>Real-time dashboards that track every automation touchpoint — leads, bookings, conversions, and revenue impact — so you can see the ROI clearly.</p>
+        <div class="svc-chips"><span class="chip">Live Dashboard</span><span class="chip">ROI Tracking</span><span class="chip">Weekly Reports</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="hiw" class="section">
+  <div class="container">
+    <div class="hiw-grid">
+      <div class="fade-up">
+        <span class="tag" style="margin-bottom:18px">The Process</span>
+        <h2 style="font-size:clamp(26px,3.5vw,40px);font-weight:900;color:var(--white);letter-spacing:-.03em;line-height:1.2;margin-bottom:16px">From Sign-Up to Fully Automated in 14 Days</h2>
+        <p style="font-size:15px;color:var(--gray);line-height:1.75;margin-bottom:32px">We handle everything. You don't need to know anything about AI — just tell us about your business, and we build the entire system for you.</p>
+        <div class="hiw-steps">
+          <div class="hiw-step"><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div><div><h4>Discovery Call</h4><p>We learn about your business, workflows, and bottlenecks to design the perfect automation blueprint.</p></div></div>
+          <div class="hiw-step"><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div><h4>We Build Everything</h4><p>Our team trains your AI agents, builds the workflows, and integrates with your existing tools — zero work from you.</p></div></div>
+          <div class="hiw-step"><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><h4>Launch & Go Live</h4><p>Your automations go live within 14 days. We monitor performance and fine-tune everything in the first 30 days.</p></div></div>
+          <div class="hiw-step"><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div><h4>Ongoing Optimisation</h4><p>Monthly reports, performance reviews, and continuous AI improvements — your system gets smarter over time.</p></div></div>
+        </div>
+      </div>
+      <div class="hiw-visual fade-up" style="transition-delay:.2s">
+        <div class="flow-card"><span class="flow-badge">Live</span><h4>🤖 AI Chatbot Active</h4><p>Handling 94% of incoming inquiries automatically — 24 hours a day, 7 days a week.</p></div>
+        <div class="flow-card"><span class="flow-badge">Running</span><h4>📩 Lead Nurture Sequence</h4><p>38 new leads this week. 7-step email sequence running automatically with personalised follow-ups.</p></div>
+        <div class="flow-card"><span class="flow-badge">Synced</span><h4>📅 Appointment System</h4><p>12 bookings confirmed today. Reminders sent, no-shows down 68% since last month.</p></div>
+        <div class="flow-card"><span class="flow-badge" style="color:#22D3EE;background:rgba(6,182,212,0.10);border-color:rgba(6,182,212,0.25)">Optimising</span><h4>📊 ROI This Month</h4><p style="font-size:22px;font-weight:900;color:var(--white);margin-top:6px">$14,200 <span style="font-size:14px;font-weight:500;color:var(--green)">attributed revenue</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI NUMBERS -->
+<section id="roi" class="section">
+  <div class="container">
+    <div class="section-header fade-up"><span class="tag">The Numbers</span><h2>What Automation Actually Delivers</h2><p>Real results from real businesses using AutoFlow AI systems.</p></div>
+    <div class="roi-grid">
+      <div class="roi-card fade-up"><div class="roi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="roi-num">70%</div><div class="roi-label">Reduction in no-shows with AI reminders</div></div>
+      <div class="roi-card fade-up" style="transition-delay:.1s"><div class="roi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="roi-num">3.2×</div><div class="roi-label">More leads captured vs manual processes</div></div>
+      <div class="roi-card fade-up" style="transition-delay:.2s"><div class="roi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="roi-num">40hrs</div><div class="roi-label">Average hours saved per week per business</div></div>
+      <div class="roi-card fade-up" style="transition-delay:.3s"><div class="roi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="roi-num">$8.6K</div><div class="roi-label">Average monthly revenue increase from clients</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section">
+  <div class="container">
+    <div class="section-header fade-up"><span class="tag">Pricing</span><h2>Simple, Transparent Plans</h2><p>No setup fees. No long contracts. Cancel anytime.</p></div>
+    <div class="pricing-grid">
+      <div class="price-card fade-up">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><sup>$</sup>497<sub>/mo</sub></div>
+        <p class="plan-desc">Perfect for solopreneurs and small businesses getting started with AI automation.</p>
+        <ul class="plan-features">
+          <li>AI Chatbot (up to 500 chats/mo)</li>
+          <li>Basic lead capture forms</li>
+          <li>Email follow-up sequence (3 steps)</li>
+          <li>Calendar booking integration</li>
+          <li>Monthly performance report</li>
+          <li class="no">Custom AI training</li>
+          <li class="no">SMS automation</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" style="width:100%;justify-content:center">Get Started</a>
+      </div>
+      <div class="price-card featured fade-up" style="transition-delay:.12s">
+        <div class="feat-badge">Most Popular</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-price"><sup>$</sup>997<sub>/mo</sub></div>
+        <p class="plan-desc">For growing businesses that want a full AI-powered system handling leads, bookings, and follow-up.</p>
+        <ul class="plan-features">
+          <li>AI Chatbot (unlimited chats)</li>
+          <li>Custom AI training on your business</li>
+          <li>Full lead gen automation</li>
+          <li>7-step email + SMS sequences</li>
+          <li>Appointment booking & reminders</li>
+          <li>CRM integration (HubSpot, GHL)</li>
+          <li>Weekly optimisation + support</li>
+        </ul>
+        <a href="#contact" class="btn btn-purple" style="width:100%;justify-content:center">Book a Demo <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="price-card fade-up" style="transition-delay:.24s">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price" style="font-size:36px">Custom</div>
+        <p class="plan-desc">For agencies and larger businesses needing fully custom AI infrastructure and dedicated support.</p>
+        <ul class="plan-features">
+          <li>Everything in Growth</li>
+          <li>Dedicated AI engineer</li>
+          <li>Custom integrations (any CRM/tool)</li>
+          <li>Multi-location support</li>
+          <li>White-label option</li>
+          <li>SLA-backed response times</li>
+          <li>Quarterly AI strategy review</li>
+        </ul>
+        <a href="#contact" class="btn btn-cyan" style="width:100%;justify-content:center">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section">
+  <div class="container">
+    <div class="section-header fade-up"><span class="tag">Client Results</span><h2>Businesses Running on Autopilot</h2><p>What happens when you remove the manual work from your growth systems.</p></div>
+    <div class="tg">
+      <div class="tc fade-up"><div class="tc-stars">★★★★★</div><p class="tc-q">"The AI chatbot now handles 90% of our incoming inquiries. We went from hiring a full-time receptionist to having zero admin overhead — and lead quality actually went up."</p><div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#7C3AED,#9D62F5)">DL</div><div><div class="tc-name">Diana Lopez</div><div class="tc-role">Salon Owner, Miami</div></div></div><div class="tc-res"><div class="tc-res-num">-$3,200/mo</div><div class="tc-res-l">saved in admin costs</div></div></div>
+      <div class="tc fade-up" style="transition-delay:.1s"><div class="tc-stars">★★★★★</div><p class="tc-q">"AutoFlow built our entire lead gen system in 10 days. We now get 60+ qualified leads per week with zero manual outreach. Our calendar has never been this full."</p><div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#06B6D4,#22D3EE)">KM</div><div><div class="tc-name">Kevin Marsh</div><div class="tc-role">Financial Advisor, Denver</div></div></div><div class="tc-res"><div class="tc-res-num">60+ leads/wk</div><div class="tc-res-l">fully automated</div></div></div>
+      <div class="tc fade-up" style="transition-delay:.2s"><div class="tc-stars">★★★★★</div><p class="tc-q">"We reduced no-shows by 71% with their appointment reminder system. That alone was worth $6K/month in recovered revenue. The ROI was obvious within the first 2 weeks."</p><div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#10B981,#059669)">SW</div><div><div class="tc-name">Sarah Wong</div><div class="tc-role">Clinic Manager, Toronto</div></div></div><div class="tc-res"><div class="tc-res-num">+$6K/mo</div><div class="tc-res-l">recovered revenue</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="section-header fade-up"><span class="tag">FAQ</span><h2>Questions Answered</h2><p>Everything you need to know before getting started.</p></div>
+    <div class="faq-wrap">
+      <div class="fi fade-up"><button class="fq" onclick="tf(this)"><h4>Do I need any technical knowledge to use AutoFlow?</h4><div class="fi-icon">+</div></button><div class="fa">None whatsoever. We handle 100% of the setup, training, and integration. You tell us about your business and we build everything for you — typically live within 14 days.</div></div>
+      <div class="fi fade-up"><button class="fq" onclick="tf(this)"><h4>What tools does AutoFlow integrate with?</h4><div class="fi-icon">+</div></button><div class="fa">We integrate with all major CRMs (HubSpot, GoHighLevel, Salesforce, Zoho), calendars (Google, Calendly, Acuity), and communication tools (Twilio, Gmail, Slack). Custom integrations available on Enterprise plans.</div></div>
+      <div class="fi fade-up"><button class="fq" onclick="tf(this)"><h4>How long does setup take?</h4><div class="fi-icon">+</div></button><div class="fa">Most clients are fully live within 10–14 business days. Complex enterprise setups may take up to 3 weeks. We run a daily standup during setup so you're always in the loop.</div></div>
+      <div class="fi fade-up"><button class="fq" onclick="tf(this)"><h4>What industries do you work with?</h4><div class="fi-icon">+</div></button><div class="fa">We've automated businesses in health & wellness, real estate, finance, legal, e-commerce, consulting, hospitality, and more. The AI is trained specifically for your industry and business — not a generic bot.</div></div>
+      <div class="fi fade-up"><button class="fq" onclick="tf(this)"><h4>Is there a contract or minimum commitment?</h4><div class="fi-icon">+</div></button><div class="fa">No long-term contracts. All plans are month-to-month and you can cancel anytime. We're confident in our results — so we don't need to lock you in.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="section">
+  <div class="hglow hg1" style="opacity:.4"></div>
+  <div class="container">
+    <div class="cta-wrap fade-up">
+      <span class="tag" style="margin-bottom:20px">Start Automating</span>
+      <h2>Stop Doing <em>Everything Manually.</em></h2>
+      <p>Book a free 30-minute AI demo and we'll show you exactly what we'd automate in your business — no commitment required.</p>
+      <div class="cta-btns2">
+        <a href="#contact" class="btn btn-purple btn-lg">Book Free AI Demo <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="#pricing" class="btn btn-outline btn-lg">View Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="con-grid">
+      <div class="fade-up">
+        <span class="tag" style="margin-bottom:16px">Get in Touch</span>
+        <h2>Book Your Free AI Demo</h2>
+        <p>Fill out the form and an automation specialist will reach out within 24 hours to schedule your personalized demo session.</p>
+        <div class="con-det"><div class="con-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>hello@autoflowai.com</div>
+        <div class="con-det"><div class="con-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>+1 (888) 299-4400</div>
+        <div class="con-det"><div class="con-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>Response within 24 hours</div>
+      </div>
+      <div class="con-form fade-up" style="transition-delay:.2s">
+        <h3>Book a Free AI Demo</h3>
+        <p>See exactly how automation would work for your business.</p>
+        <div class="fgr">
+          <div class="fg"><label>First Name</label><input type="text" placeholder="Sarah"/></div>
+          <div class="fg"><label>Last Name</label><input type="text" placeholder="Johnson"/></div>
+        </div>
+        <div class="fg"><label>Business Email</label><input type="email" placeholder="you@business.com"/></div>
+        <div class="fg"><label>Business Type</label><select><option value="">Select your industry...</option><option>Coaching / Consulting</option><option>Real Estate</option><option>Health & Wellness</option><option>E-Commerce</option><option>Legal / Finance</option><option>Other</option></select></div>
+        <div class="fg"><label>Biggest Automation Challenge</label><textarea placeholder="Tell us what tasks take up the most of your team's time..."></textarea></div>
+        <button class="btn btn-purple btn-lg" style="width:100%;justify-content:center" onclick="this.textContent='✓ Demo booked! We\'ll be in touch within 24 hours.';this.style.background='#10B981';this.disabled=true">Book My Free Demo <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="ft">
+      <div class="fb"><div class="fb-logo">Auto<span>Flow</span> AI</div><p>AI-powered automation systems that help businesses capture more leads, book more appointments, and scale without hiring.</p></div>
+      <div class="fc"><h4>Services</h4><ul><li><a href="#">AI Chatbot</a></li><li><a href="#">Lead Gen Automation</a></li><li><a href="#">Appointment Booking</a></li><li><a href="#">Email & SMS</a></li></ul></div>
+      <div class="fc"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Blog</a></li><li><a href="#">Pricing</a></li></ul></div>
+      <div class="fc"><h4>Connect</h4><ul><li><a href="#">hello@autoflowai.com</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="fb-bot"><p>© 2025 AutoFlow AI. All rights reserved.</p><p style="color:rgba(255,255,255,0.2);font-size:13px">Automate. Scale. Grow.</p></div>
+  </div>
+</footer>
+
+<script>
+const nb=document.getElementById('nb');
+window.addEventListener('scroll',()=>nb.classList.toggle('scrolled',scrollY>30));
+document.getElementById('ham').addEventListener('click',()=>document.getElementById('mob').classList.toggle('open'));
+function cm(){document.getElementById('mob').classList.remove('open')}
+function tf(btn){const fi=btn.closest('.fi');const open=fi.classList.contains('open');document.querySelectorAll('.fi.open').forEach(i=>i.classList.remove('open'));if(!open)fi.classList.add('open')}
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
