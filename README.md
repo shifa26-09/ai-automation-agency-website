@@ -24,6 +24,7 @@ This project demonstrates how AI automation agencies can communicate their value
 
 ## Live Demo
 
+ai-automation-web67.netlify.app
 
 ## Author
 
